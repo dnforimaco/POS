@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme - Material 3 POS friendly -->
+    <style name="Theme.MENUPOS" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/pos_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/pos_accent</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">@color/pos_primary_dark</item>
+        <item name="android:windowBackground">@color/pos_warm_bg</item>
+
+        <!-- Surface and OnSurface colors for POS look -->
+        <item name="colorSurface">@color/pos_card_bg</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorSurfaceVariant">@color/pos_warm_bg</item>
+        <item name="colorOnSurfaceVariant">#757575</item>
+    </style>
+
+    <!-- Ensure NoActionBar inherits from Theme.MENUPOS -->
+    <style name="Theme.MENUPOS.NoActionBar" parent="Theme.MENUPOS">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MENUPOS.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar" />
+
+    <style name="Theme.MENUPOS.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
+</resources>

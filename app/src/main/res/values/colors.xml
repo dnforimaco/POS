@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- POS warm & friendly -->
+    <color name="pos_primary">#FF6D2C</color>
+    <color name="pos_primary_dark">#E85A1A</color>
+    <color name="pos_accent">#FFB74D</color>
+    <color name="pos_warm_bg">#FFF8E7</color>
+    <color name="pos_card_bg">#FFFFFF</color>
+    <color name="card_category_bg">#FFF3E0</color>
+    <color name="card_category_stroke">#FFCC80</color>
+    <color name="card_category_icon">#E65100</color>
+    <color name="card_category_text">#BF360C</color>
+    <color name="card_category_subtitle">#8D6E63</color>
+    <color name="price_red">#C62828</color>
+    <color name="badge_best_seller">#FFC107</color>
+    <color name="badge_spicy">#D32F2F</color>
+
+    <!-- Inventory stock status colors -->
+    <color name="inventory_stock_low_orange">#FF9800</color>
+    <color name="inventory_stock_in_green">#2E7D32</color>
+</resources>

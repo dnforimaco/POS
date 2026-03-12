@@ -1,0 +1,208 @@
+<resources>
+    <string name="app_name">MENU-POS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">MENU-POS</string>
+    <string name="nav_header_subtitle">Point of Sale</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="nav_menu">Menu</string>
+    <string name="menu_transform">Transform</string>
+    <string name="menu_reflow">Reflow</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="lorem_ipsum_title">Lorem Ipsum</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
+        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
+        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+        type specimen book
+    </string>
+    <string name="fab_content_description">Represents a view to invoke an action</string>
+    <string name="image_view_item_transform_content_description">Represents an image view in the
+        item
+    </string>
+
+    <string name="menu_title">Choose a category</string>
+    <string name="add_to_cart">Add</string>
+    <string name="added_to_cart">Added to cart</string>
+    <string name="price_format">₱%d</string>
+    <string name="cart_title">Your order</string>
+    <string name="cart_empty">Your cart is empty. Add items from the menu!</string>
+    <string name="cart_total">Total: ₱%d</string>
+    <string name="cart_checkout">Checkout</string>
+    <string name="cart_checkout_success">Order completed.</string>
+    <string name="cart_empty_checkout">Add items to cart first.</string>
+    <string name="cart_clear">Clear cart</string>
+
+    <!-- Checkout / Payment -->
+    <string name="payment_title">Payment</string>
+    <string name="payment_order_total">Order total</string>
+    <string name="payment_cash_received">Cash received</string>
+    <string name="payment_change">Change</string>
+    <string name="payment_confirm">Confirm payment</string>
+    <string name="payment_invalid_cash">Cash received must be at least the total.</string>
+    <string name="payment_type_cash">Cash</string>
+
+    <string name="confirm_title">Payment successful</string>
+    <string name="confirm_order_number">Order number</string>
+    <string name="confirm_total">Total</string>
+    <string name="confirm_cash_received">Cash received</string>
+    <string name="confirm_change">Change</string>
+    <string name="confirm_print">Print receipt</string>
+    <string name="confirm_reprint">Reprint receipt</string>
+    <string name="confirm_new_order">New order</string>
+    <string name="confirm_printing">Sending receipt to printer…</string>
+
+    <string name="pos_title">NAOMIE\'S LOMI HOUSE</string>
+
+    <!-- Login -->
+    <string name="login_subtitle">Sign in to continue</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_employee_hint">Employee account: leave password empty.</string>
+    <string name="login_button">Sign in</string>
+    <string name="login_error">Invalid username or password.</string>
+    <string name="login_welcome">Welcome, %1$s</string>
+    <string name="pos_search_hint">Search products…</string>
+    <string name="pos_home">Home</string>
+    <string name="pos_orders">Orders</string>
+    <string name="pos_reports">Reports</string>
+    <string name="pos_inventory">Inventory</string>
+    <string name="pos_logout">Logout</string>
+
+    <!-- Orders -->
+    <string name="orders_title">Orders</string>
+    <string name="orders_empty">No orders yet. Complete a checkout to see it here.</string>
+    <string name="orders_total">Total: ₱%d</string>
+    <string name="orders_items_count">%1$d items</string>
+    <string name="orders_details_title">Order #%1$s</string>
+    <string name="orders_details_close">Close</string>
+    <string name="orders_delete">Delete</string>
+    <string name="orders_delete_selected">Delete selected orders?</string>
+    <string name="orders_delete_one">Delete this order?</string>
+    <string name="orders_deleted">Orders deleted.</string>
+    <string name="orders_manager_only_delete">Only Manager can delete orders.</string>
+
+    <!-- Reports tab text -->
+    <string name="reports_title">Reports</string>
+    <string name="reports_purpose">Business analytics and sales tracking.</string>
+
+    <string name="reports_section_sales">Sales</string>
+    <string name="reports_daily_sales">•  Daily Sales</string>
+    <string name="reports_weekly_sales">•  Weekly Sales</string>
+    <string name="reports_monthly_sales">•  Monthly Sales</string>
+
+    <string name="reports_section_charts">Top selling / by category</string>
+    <string name="reports_chart_top_items">•  Top selling items</string>
+    <string name="reports_chart_by_category">•  Sales by category</string>
+
+    <string name="reports_section_other">Other Reports</string>
+    <string name="reports_total_orders">•  Total orders</string>
+    <string name="reports_avg_order_value">•  Average order value</string>
+    <string name="reports_peak_hours">•  Peak hours</string>
+    <string name="reports_popular_item">•  Most popular menu item</string>
+    <string name="reports_cancelled_orders">•  Cancelled orders</string>
+
+    <string name="reports_section_export">Export Options</string>
+    <string name="reports_export_pdf">•  Export to PDF</string>
+    <string name="reports_export_pdf_button">Export to PDF</string>
+
+    <string name="reports_back">Back</string>
+
+    <!-- Reports password -->
+    <string name="reports_password_title">Enter reports password</string>
+    <string name="reports_password_hint">Password</string>
+    <string name="reports_password_error">Incorrect password.</string>
+    <string name="reports_password_ok">OK</string>
+    <string name="reports_password_cancel">Cancel</string>
+    <string name="reports_manager_only">Reports are only available to Manager.</string>
+
+    <!-- Inventory -->
+    <string name="inventory_title">Inventory</string>
+    <string name="inventory_manager_only">Inventory is only available to Manager.</string>
+    <string name="inventory_tab_items">Items</string>
+    <string name="inventory_tab_history">History</string>
+    <string name="inventory_add_item">Add item</string>
+    <string name="inventory_add_category">Add category</string>
+    <string name="inventory_edit_item">Edit item</string>
+    <string name="inventory_delete_item">Delete item?</string>
+    <string name="inventory_restock">Restock</string>
+    <string name="inventory_category">Category</string>
+    <string name="inventory_item_name">Item name</string>
+    <string name="inventory_stock_qty">Current stock</string>
+    <string name="inventory_stock_status">Stock status</string>
+    <string name="inventory_action">Action</string>
+    <string name="inventory_min_stock_qty">Minimum stock level</string>
+    <string name="inventory_saved">Saved.</string>
+    <string name="inventory_deleted">Deleted.</string>
+    <string name="inventory_name_required">Name is required.</string>
+    <string name="inventory_qty_invalid">Quantity must be a number.</string>
+    <string name="inventory_low_stock_badge">LOW</string>
+    <string name="inventory_stock_format">Stock: %1$d (min %2$d)</string>
+    <string name="inventory_export_report">Export Inventory Report</string>
+    <string name="inventory_export_error">Could not generate PDF.</string>
+    <string name="inventory_clear_history">Clear History</string>
+    <string name="inventory_clear_history_confirm">Clear inventory history? This cannot be undone.</string>
+    <string name="inventory_clear_history_done">History cleared.</string>
+
+    <string name="reports_no_data">No data yet</string>
+    <string name="reports_export_share">Share sales report</string>
+    <string name="reports_export_success">Report saved. Share or open with another app.</string>
+    <string name="reports_export_error">Could not create PDF.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_section_restaurant">Restaurant Info</string>
+    <string name="settings_restaurant_name">Restaurant Name</string>
+    <string name="settings_restaurant_address">Address</string>
+    <string name="settings_restaurant_contact">Contact Number</string>
+    <string name="settings_restaurant_name_value">Naomie\'s Famous Lomi, Bulalo, and Gotong Batangas</string>
+    <string name="settings_restaurant_address_value">59 General Ordoñez street, Marikina City, Philippines</string>
+    <string name="settings_restaurant_contact_value">0956 667 4823 | 0994 865 7461</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_saved">Restaurant info saved.</string>
+    <string name="settings_section_menu">Menu Management</string>
+    <string name="settings_menu_add_edit_delete">Add/Edit/Delete food items</string>
+    <string name="settings_menu_prices">Change prices</string>
+    <string name="settings_menu_categories">Add categories</string>
+    <string name="settings_manager_only">Manager only</string>
+    <string name="settings_section_users">User Accounts</string>
+    <string name="settings_change_password">Change password</string>
+    <string name="settings_section_printer">Printer Settings</string>
+    <string name="settings_printer_guideline">How to Connect to the Printer</string>
+    <string name="settings_printer_guideline_text">1. Turn on your Bluetooth or Wi‑Fi printer and make it discoverable.\n\n2. On this device, open Settings → Connected devices (or Bluetooth/Wi‑Fi) and pair with the printer.\n\n3. Install the printer\'s app from the Play Store if required for receipt printing.\n\n4. In this POS app, the printer will be available once paired; select it when printing receipts.</string>
+    <string name="settings_change_password_title">Change password</string>
+    <string name="settings_current_password">Current password</string>
+    <string name="settings_new_password">New password</string>
+    <string name="settings_confirm_password">Confirm new password</string>
+    <string name="settings_password_changed">Password updated.</string>
+    <string name="settings_password_mismatch">New passwords do not match.</string>
+    <string name="settings_password_wrong">Current password is incorrect.</string>
+
+    <!-- Menu Management -->
+    <string name="manage_categories_title">Manage categories</string>
+    <string name="manage_items_title">Manage menu items</string>
+    <string name="manage_add_category">Add category</string>
+    <string name="manage_add_item">Add item</string>
+    <string name="manage_edit">Edit</string>
+    <string name="manage_delete">Delete</string>
+    <string name="manage_category_name">Category name</string>
+    <string name="manage_category_subtitle">Subtitle</string>
+    <string name="manage_item_name">Item name</string>
+    <string name="manage_item_description">Description</string>
+    <string name="manage_variant_label">Variant (e.g. Regular, 10 PAX)</string>
+    <string name="manage_variant_price">Price (₱)</string>
+    <string name="manage_add_variant">Add variant</string>
+    <string name="manage_best_seller">Best seller</string>
+    <string name="manage_spicy">Spicy</string>
+    <string name="manage_select_category">Select category</string>
+    <string name="manage_confirm_delete_category">Delete this category and all its items?</string>
+    <string name="manage_confirm_delete_item">Delete this item?</string>
+    <string name="manage_saved">Saved.</string>
+    <string name="manage_deleted">Deleted.</string>
+    <string name="manage_name_required">Name is required.</string>
+    <string name="manage_one_variant_required">At least one variant with price is required.</string>
+</resources>

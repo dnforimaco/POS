@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_login">
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.menu_pos.ui.login.LoginFragment"
+        android:label="@string/login_subtitle"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/nav_pos"
+        android:name="com.example.menu_pos.ui.pos.PosFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_pos" />
+
+    <fragment
+        android:id="@+id/nav_orders"
+        android:name="com.example.menu_pos.ui.orders.OrdersFragment"
+        android:label="@string/orders_title"
+        tools:layout="@layout/fragment_orders" />
+
+    <fragment
+        android:id="@+id/nav_payment"
+        android:name="com.example.menu_pos.ui.checkout.PaymentFragment"
+        android:label="@string/payment_title"
+        tools:layout="@layout/fragment_payment" />
+
+    <fragment
+        android:id="@+id/nav_payment_confirmation"
+        android:name="com.example.menu_pos.ui.checkout.PaymentConfirmationFragment"
+        android:label="@string/confirm_title"
+        tools:layout="@layout/fragment_payment_confirmation" />
+
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="com.example.menu_pos.ui.category.CategoryFragment"
+        android:label="@string/menu_title"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.example.menu_pos.ui.cart.CartFragment"
+        android:label="@string/cart_title"
+        tools:layout="@layout/fragment_cart" />
+
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.example.menu_pos.ui.reports.ReportsFragment"
+        android:label="@string/reports_title"
+        tools:layout="@layout/fragment_reports" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.menu_pos.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_manage_categories"
+        android:name="com.example.menu_pos.ui.menu_management.ManageCategoriesFragment"
+        android:label="@string/manage_categories_title"
+        tools:layout="@layout/fragment_manage_categories" />
+
+    <fragment
+        android:id="@+id/nav_manage_items"
+        android:name="com.example.menu_pos.ui.menu_management.ManageMenuItemsFragment"
+        android:label="@string/manage_items_title"
+        tools:layout="@layout/fragment_manage_items" />
+
+    <fragment
+        android:id="@+id/nav_inventory"
+        android:name="com.example.menu_pos.ui.inventory.InventoryFragment"
+        android:label="@string/inventory_title"
+        tools:layout="@layout/fragment_inventory" />
+</navigation>

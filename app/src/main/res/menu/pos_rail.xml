@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/pos_home"
+            android:icon="@drawable/ic_menu_24"
+            android:title="@string/pos_home" />
+        <item
+            android:id="@+id/pos_orders"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="@string/pos_orders" />
+        <item
+            android:id="@+id/pos_reports"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/pos_reports" />
+        <item
+            android:id="@+id/pos_inventory"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="@string/pos_inventory" />
+        <item
+            android:id="@+id/pos_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/menu_settings" />
+        <item
+            android:id="@+id/pos_logout"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="@string/pos_logout" />
+    </group>
+</menu>
