@@ -211,6 +211,24 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/reports_daily_cash_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="13sp"
+                        android:textColor="#616161"
+                        tools:text="Cash: ₱0" />
+
+                    <TextView
+                        android:id="@+id/reports_daily_gcash_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="13sp"
+                        android:textColor="#616161"
+                        tools:text="GCash: ₱0" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

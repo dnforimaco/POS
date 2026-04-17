@@ -17,6 +17,9 @@ public interface MenuItemDao {
     @Query("SELECT * FROM menu_items WHERE id = :id LIMIT 1")
     MenuItemEntity getById(String id);
 
+    @Query("SELECT COUNT(*) FROM menu_items")
+    int getCount();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(MenuItemEntity item);
 

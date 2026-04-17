@@ -3,6 +3,7 @@ package com.example.menu_pos.data;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -11,6 +12,9 @@ public interface PaidOrderDao {
 
     @Insert
     long insert(PaidOrderEntity order);
+
+    @Update
+    void update(PaidOrderEntity order);
 
     @Query("SELECT * FROM paid_orders ORDER BY id DESC")
     List<PaidOrderEntity> getAllDesc();

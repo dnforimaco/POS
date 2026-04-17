@@ -10,8 +10,10 @@ import com.example.menu_pos.data.MenuItemVariant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -49,16 +51,17 @@ public class InventoryRepository {
     }
 
     /**
-     * Ensures every menu category + menu item (including variants) exists in inventory.
-     * Existing inventory items are not overwritten (stock is preserved).
+     * Syncs inventory with the current menu: adds new items, moves existing items to the correct
+     * category, and removes inventory items that are no longer on the menu for each menu-derived category.
      */
     private void syncFromMenu() {
         try {
             List<MenuCategory> menuCats = menuRepo.getCategories();
             if (menuCats == null) return;
 
-            // Build next sort order after existing categories.
             int nextSort = categoryDao.getCount();
+            // For each menu-derived inv category, track the set of item names that belong there.
+            Map<String, Set<String>> expectedNamesByInvCategoryId = new HashMap<>();
 
             for (MenuCategory mc : menuCats) {
                 if (mc == null) continue;
@@ -72,6 +75,9 @@ public class InventoryRepository {
                     categoryDao.insert(invCat);
                 }
 
+                Set<String> expectedNames = new HashSet<>();
+                expectedNamesByInvCategoryId.put(invCat.id, expectedNames);
+
                 List<MenuItem> menuItems = mc.getItems();
                 if (menuItems == null) continue;
 
@@ -82,15 +88,28 @@ public class InventoryRepository {
 
                     List<MenuItemVariant> vars = mi.getVariants();
                     if (vars == null || vars.isEmpty()) {
-                        ensureInventoryItemExists(invCat.id, baseName);
+                        ensureInventoryItemInCategory(invCat.id, baseName, expectedNames);
                         continue;
                     }
 
-                    // Create one inventory row per variant (matches cart item name + variant label).
                     for (MenuItemVariant v : vars) {
                         String label = v != null && v.getLabel() != null ? v.getLabel().trim() : "";
                         String invName = label.isEmpty() ? baseName : (baseName + " " + label);
-                        ensureInventoryItemExists(invCat.id, invName);
+                        ensureInventoryItemInCategory(invCat.id, invName, expectedNames);
+                    }
+                }
+            }
+
+            // Remove inventory items that are no longer on the menu for each menu-derived category.
+            for (Map.Entry<String, Set<String>> e : expectedNamesByInvCategoryId.entrySet()) {
+                String invCatId = e.getKey();
+                Set<String> expected = e.getValue();
+                if (expected == null) continue;
+                for (InventoryItemEntity item : itemDao.getByCategory(invCatId)) {
+                    if (item == null || item.name == null) continue;
+                    String name = item.name.trim();
+                    if (!expected.contains(name)) {
+                        itemDao.deleteById(item.id);
                     }
                 }
             }
@@ -98,12 +117,26 @@ public class InventoryRepository {
         }
     }
 
-    private void ensureInventoryItemExists(String categoryId, String name) {
+    /**
+     * Ensures an inventory item with this name exists in the given category.
+     * If it already exists (by name), moves it to this category. Preserves stock.
+     */
+    private void ensureInventoryItemInCategory(String categoryId, String name, Set<String> expectedNames) {
         if (name == null) return;
         String trimmed = name.trim();
         if (trimmed.isEmpty()) return;
+        expectedNames.add(trimmed);
         InventoryItemEntity existing = itemDao.getByName(trimmed);
-        if (existing != null) return;
+        if (existing != null) {
+            if (existing.name != null && !existing.name.trim().isEmpty()) {
+                expectedNames.add(existing.name.trim());
+            }
+            if (!categoryId.equals(existing.categoryId)) {
+                existing.categoryId = categoryId;
+                itemDao.update(existing);
+            }
+            return;
+        }
         String id = "inv_item_" + UUID.randomUUID().toString().substring(0, 8);
         itemDao.insert(new InventoryItemEntity(id, categoryId, trimmed, 0, DEFAULT_MIN_STOCK_QTY));
     }

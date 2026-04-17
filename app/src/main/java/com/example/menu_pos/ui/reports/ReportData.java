@@ -6,6 +6,8 @@ import java.util.List;
 /** Computed report values for the Reports tab. */
 public final class ReportData {
     private final int dailySalesCents;
+    private final int dailyCashSalesCents;
+    private final int dailyGcashSalesCents;
     private final int weeklySalesCents;
     private final int monthlySalesCents;
     private final List<TopItem> topSellingItems;
@@ -16,11 +18,14 @@ public final class ReportData {
     private final String mostPopularItem;
     private final int cancelledOrders;
 
-    public ReportData(int dailySalesCents, int weeklySalesCents, int monthlySalesCents,
+    public ReportData(int dailySalesCents, int dailyCashSalesCents, int dailyGcashSalesCents,
+                      int weeklySalesCents, int monthlySalesCents,
                       List<TopItem> topSellingItems, List<CategorySale> salesByCategory,
                       int totalOrders, int averageOrderValueCents, String peakHour,
                       String mostPopularItem, int cancelledOrders) {
         this.dailySalesCents = dailySalesCents;
+        this.dailyCashSalesCents = dailyCashSalesCents;
+        this.dailyGcashSalesCents = dailyGcashSalesCents;
         this.weeklySalesCents = weeklySalesCents;
         this.monthlySalesCents = monthlySalesCents;
         this.topSellingItems = topSellingItems != null ? new ArrayList<>(topSellingItems) : new ArrayList<>();
@@ -33,6 +38,8 @@ public final class ReportData {
     }
 
     public int getDailySalesCents() { return dailySalesCents; }
+    public int getDailyCashSalesCents() { return dailyCashSalesCents; }
+    public int getDailyGcashSalesCents() { return dailyGcashSalesCents; }
     public int getWeeklySalesCents() { return weeklySalesCents; }
     public int getMonthlySalesCents() { return monthlySalesCents; }
     public List<TopItem> getTopSellingItems() { return topSellingItems; }

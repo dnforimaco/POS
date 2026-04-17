@@ -39,6 +39,16 @@
                 android:textColor="#212121"
                 tools:text="Order #1710158848123" />
 
+            <TextView
+                android:id="@+id/order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/pos_primary"
+                tools:text="Unpaid" />
+
             <ImageButton
                 android:id="@+id/order_delete"
                 android:layout_width="48dp"
@@ -89,6 +99,94 @@
             android:textSize="13sp"
             android:textColor="#424242"
             tools:text="Change: ₱0" />
+
+        <LinearLayout
+            android:id="@+id/order_actions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/order_open_pos"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="36dp"
+                    android:text="@string/orders_action_open_pos"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/pos_primary"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/order_view_details"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:minHeight="36dp"
+                    android:text="@string/orders_action_details"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/pos_primary"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/order_reprint_kitchen"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:minHeight="36dp"
+                    android:text="@string/orders_action_reprint_kitchen"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/pos_primary"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/order_bill_out"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="36dp"
+                    android:text="@string/orders_action_bill_out_receipt"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/pos_primary"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/order_pay"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:minHeight="36dp"
+                    android:text="@string/orders_action_pay_order"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/pos_primary"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

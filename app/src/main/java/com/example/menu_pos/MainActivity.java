@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.menu_pos.databinding.ActivityMainBinding;
+import com.example.menu_pos.printer.BluetoothPrinterManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Auto-connect to saved Bluetooth printer (non-blocking).
+        BluetoothPrinterManager.getInstance(getApplicationContext()).autoConnectIfEnabled();
 
         setSupportActionBar(binding.appBarMain.toolbar);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);

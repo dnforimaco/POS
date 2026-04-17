@@ -11,11 +11,14 @@ import com.example.menu_pos.data.PaidOrderEntity;
 import com.example.menu_pos.data.PaidOrderRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class OrdersViewModel extends AndroidViewModel {
 
     private final PaidOrderRepository repo;
     private final MutableLiveData<List<PaidOrderEntity>> orders = new MutableLiveData<>();
+    private final ExecutorService ioExecutor = Executors.newSingleThreadExecutor();
 
     public OrdersViewModel(@NonNull Application application) {
         super(application);
@@ -28,7 +31,13 @@ public class OrdersViewModel extends AndroidViewModel {
     }
 
     public void refresh() {
-        orders.setValue(repo.getAllOrdersDesc());
+        ioExecutor.execute(() -> orders.postValue(repo.getAllOrdersDesc()));
+    }
+
+    @Override
+    protected void onCleared() {
+        ioExecutor.shutdown();
+        super.onCleared();
     }
 }
 

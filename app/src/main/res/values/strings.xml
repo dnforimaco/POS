@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">MENU-POS</string>
+    <string name="app_name">Naomie Lomi</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">MENU-POS</string>
+    <string name="nav_header_title">Naomie Lomi</string>
     <string name="nav_header_subtitle">Point of Sale</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -44,6 +44,16 @@
     <string name="payment_confirm">Confirm payment</string>
     <string name="payment_invalid_cash">Cash received must be at least the total.</string>
     <string name="payment_type_cash">Cash</string>
+    <string name="payment_type_gcash">GCash</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_gcash_ref_hint">Enter the last 4 digits of the reference number</string>
+    <string name="payment_gcash_ref_invalid">Please enter the last 4 digits (numbers only).</string>
+    <string name="payment_order_type">Order type</string>
+    <string name="payment_order_type_dine_in">Dine In</string>
+    <string name="payment_order_type_take_out">Take Out</string>
+    <string name="payment_select_order_type">Please select Dine In or Take Out.</string>
+    <string name="payment_table_number_hint">Table # (for dine-in)</string>
+    <string name="payment_table_required">Please enter a table number for dine-in orders.</string>
 
     <string name="confirm_title">Payment successful</string>
     <string name="confirm_order_number">Order number</string>
@@ -54,6 +64,7 @@
     <string name="confirm_reprint">Reprint receipt</string>
     <string name="confirm_new_order">New order</string>
     <string name="confirm_printing">Sending receipt to printer…</string>
+    <string name="orders_bill_out_printing">Sending bill out receipt to printer…</string>
 
     <string name="pos_title">NAOMIE\'S LOMI HOUSE</string>
 
@@ -66,6 +77,7 @@
     <string name="login_error">Invalid username or password.</string>
     <string name="login_welcome">Welcome, %1$s</string>
     <string name="pos_search_hint">Search products…</string>
+    <string name="pos_search_all_categories">Showing matches from every category. Tap a tab to browse one category.</string>
     <string name="pos_home">Home</string>
     <string name="pos_orders">Orders</string>
     <string name="pos_reports">Reports</string>
@@ -79,11 +91,59 @@
     <string name="orders_items_count">%1$d items</string>
     <string name="orders_details_title">Order #%1$s</string>
     <string name="orders_details_close">Close</string>
+    <string name="orders_details_items_label">Items</string>
     <string name="orders_delete">Delete</string>
     <string name="orders_delete_selected">Delete selected orders?</string>
     <string name="orders_delete_one">Delete this order?</string>
     <string name="orders_deleted">Orders deleted.</string>
     <string name="orders_manager_only_delete">Only Manager can delete orders.</string>
+    <string name="orders_status_pending">Unpaid</string>
+    <string name="orders_status_paid">Paid</string>
+    <string name="orders_pending_actions_title">Order #%1$s</string>
+    <string name="orders_pending_actions_hint">Choose what you want to do with this unpaid order.</string>
+    <string name="orders_action_open_pos">Add/Edit</string>
+    <string name="orders_action_details">View</string>
+    <string name="orders_action_pay_order">Pay Order</string>
+    <string name="orders_action_reprint_kitchen">Reprint Slip</string>
+    <string name="orders_action_bill_out_receipt">Bill Out</string>
+    <string name="orders_action_tag_open">Open</string>
+    <string name="orders_action_tag_view">View</string>
+    <string name="orders_action_tag_print">Print</string>
+    <string name="orders_unpaid_hint">Payment pending</string>
+    <string name="pos_send_to_kitchen">Send to kitchen</string>
+    <string name="pos_save_order">Save order</string>
+    <string name="pos_order_type">Order type</string>
+    <string name="pos_select_order_type">Please select Dine In or Take Out before sending.</string>
+    <string name="pos_table_number_hint">Table # (for dine-in)</string>
+    <string name="pos_table_required">Please enter a table number before sending a dine-in order.</string>
+    <string name="pos_order_notes_hint">Order notes (kitchen)</string>
+    <string name="pos_send_dialog_title">Order details</string>
+    <string name="pos_confirm_send">Confirm Send</string>
+    <string name="pos_close">Close</string>
+    <string name="pos_editing_order">Editing order #%1$d</string>
+    <string name="pos_variant_dialog_hint">Choose a size or portion, then tap a row to add it to your cart. Use Cancel if you don’t want to add this item.</string>
+    <string name="pos_variant_cancel">Cancel</string>
+    <string name="pos_variant_tap_to_add">Add</string>
+    <string name="pos_variant_default_label">Standard</string>
+    <string name="combo_custom_dialog_title">Custom Combo</string>
+    <string name="combo_custom_dialog_body">Type the two items you want in this combo (same price as other Combo Sizz).</string>
+    <string name="combo_custom_hint">e.g. Tapa + Sisig</string>
+    <string name="combo_custom_empty">Enter what you want in this combo.</string>
+    <string name="others_custom_dialog_title">Custom Item</string>
+    <string name="others_custom_name_hint">Item name</string>
+    <string name="others_custom_price_hint">Price (₱)</string>
+    <string name="others_custom_body">Type the item name and its price in pesos.</string>
+    <string name="others_custom_invalid">Enter a name and a valid price.</string>
+    <string name="kitchen_slip_print_sent">Kitchen slip sent to printer.</string>
+    <string name="kitchen_slip_saved">Order saved</string>
+    <string name="kitchen_additional_items_printed">Order updated. Additional items slip printed.</string>
+    <string name="kitchen_order_saved_no_additional_items">Order updated. No additional items to print.</string>
+    <string name="kitchen_slip_save_failed">Could not save order. Please try again.</string>
+    <string name="receipt_unpaid_order">Receipt is only available after payment.</string>
+    <string name="payment_process_failed">Could not process payment. Please try again.</string>
+    <string name="kitchen_reprint_pending_only">Kitchen slip is only for unpaid orders.</string>
+    <string name="cart_apply_discount_10">Apply discount (10%)</string>
+    <string name="cart_line_with_discount">%1$s (was %2$s)</string>
 
     <!-- Reports tab text -->
     <string name="reports_title">Reports</string>
@@ -172,6 +232,18 @@
     <string name="settings_section_users">User Accounts</string>
     <string name="settings_change_password">Change password</string>
     <string name="settings_section_printer">Printer Settings</string>
+    <string name="settings_printer_selected">Selected printer</string>
+    <string name="settings_printer_none_selected">No printer selected</string>
+    <string name="settings_printer_status_connected">Connected</string>
+    <string name="settings_printer_status_disconnected">Disconnected</string>
+    <string name="settings_printer_select">Select Printer</string>
+    <string name="settings_printer_test_print">Test Print</string>
+    <string name="settings_printer_reconnect">Reconnect Printer</string>
+    <string name="settings_printer_auto_connect">Auto-connect on app start</string>
+    <string name="settings_printer_auto_print">Auto-print after checkout</string>
+    <string name="settings_printer_no_paired_devices">No paired Bluetooth devices found.</string>
+    <string name="settings_printer_permission_needed">Bluetooth permission required.</string>
+    <string name="printer_not_connected_retry">Printer not connected. Retry?</string>
     <string name="settings_printer_guideline">How to Connect to the Printer</string>
     <string name="settings_printer_guideline_text">1. Turn on your Bluetooth or Wi‑Fi printer and make it discoverable.\n\n2. On this device, open Settings → Connected devices (or Bluetooth/Wi‑Fi) and pair with the printer.\n\n3. Install the printer\'s app from the Play Store if required for receipt printing.\n\n4. In this POS app, the printer will be available once paired; select it when printing receipts.</string>
     <string name="settings_change_password_title">Change password</string>

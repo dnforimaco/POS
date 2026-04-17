@@ -38,6 +38,14 @@
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 tools:text="₱180" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cart_item_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/cart_apply_discount_10"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout

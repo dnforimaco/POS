@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.menu_pos.data.MenuCategory;
 import com.example.menu_pos.data.MenuItem;
 import com.example.menu_pos.data.MenuRepository;
+import com.example.menu_pos.data.OrderStatus;
 import com.example.menu_pos.data.PaidOrderEntity;
 import com.example.menu_pos.data.PaidOrderLineEntity;
 import com.example.menu_pos.data.PaidOrderRepository;
@@ -20,12 +21,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ReportsViewModel extends AndroidViewModel {
 
     private final PaidOrderRepository paidOrderRepo;
     private final MutableLiveData<ReportData> reportData = new MutableLiveData<>();
     private final MenuRepository menuRepo;
+    private final ExecutorService ioExecutor = Executors.newSingleThreadExecutor();
 
     public ReportsViewModel(@NonNull Application application) {
         super(application);
@@ -39,7 +43,7 @@ public class ReportsViewModel extends AndroidViewModel {
     }
 
     public void refresh() {
-        reportData.setValue(computeReport());
+        ioExecutor.execute(() -> reportData.postValue(computeReport()));
     }
 
     private ReportData computeReport() {
@@ -57,7 +61,7 @@ public class ReportsViewModel extends AndroidViewModel {
         // "Last 30 days" includes today + previous 29 days.
         long monthStart = todayStart - 29L * 24 * 60 * 60 * 1000;
 
-        int dailyCents = 0, weeklyCents = 0, monthlyCents = 0;
+        int dailyCents = 0, dailyCashCents = 0, dailyGcashCents = 0, weeklyCents = 0, monthlyCents = 0;
         Map<String, Integer> itemQuantities = new HashMap<>();
         Map<String, Integer> categoryCents = new HashMap<>();
         Map<Integer, Integer> hourCounts = new HashMap<>();
@@ -85,9 +89,15 @@ public class ReportsViewModel extends AndroidViewModel {
         }
 
         for (PaidOrderEntity o : orders) {
+            if (o.orderStatus != OrderStatus.PAID) continue;
             long t = o.timestampMillis;
             int total = o.totalCents;
-            if (t >= todayStart) dailyCents += total;
+            if (t >= todayStart) {
+                dailyCents += total;
+                String pt = o.paymentType != null ? o.paymentType.trim().toLowerCase(Locale.getDefault()) : "";
+                if ("gcash".equals(pt)) dailyGcashCents += total;
+                else dailyCashCents += total; // default to cash for legacy/unknown
+            }
             if (t >= weekStart) weeklyCents += total;
             if (t >= monthStart) monthlyCents += total;
 
@@ -142,17 +152,26 @@ public class ReportsViewModel extends AndroidViewModel {
         String peakHourStr = peakCount > 0 ? String.format(Locale.getDefault(), "%d:00 - %d:59", peakHour, peakHour) : "—";
 
         int ordersInMonth = 0;
+        int paidOrdersCount = 0;
         for (PaidOrderEntity o : orders) {
+            if (o.orderStatus != OrderStatus.PAID) continue;
+            paidOrdersCount++;
             if (o.timestampMillis >= monthStart) ordersInMonth++;
         }
-        int totalOrders = orders.size();
+        int totalOrders = paidOrdersCount;
         int avgCents = ordersInMonth > 0 ? monthlyCents / ordersInMonth : 0;
 
         return new ReportData(
-                dailyCents, weeklyCents, monthlyCents,
+                dailyCents, dailyCashCents, dailyGcashCents, weeklyCents, monthlyCents,
                 topItems, byCategory,
                 totalOrders, avgCents,
                 peakHourStr, mostPopularName != null ? mostPopularName : "—", 0
         );
+    }
+
+    @Override
+    protected void onCleared() {
+        ioExecutor.shutdown();
+        super.onCleared();
     }
 }

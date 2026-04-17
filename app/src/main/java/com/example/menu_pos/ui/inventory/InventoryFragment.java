@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class InventoryFragment extends Fragment {
 
@@ -52,6 +56,8 @@ public class InventoryFragment extends Fragment {
     private ItemsAdapter itemsAdapter;
 
     private HistoryAdapter historyAdapter;
+    private final ExecutorService ioExecutor = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -310,28 +316,34 @@ public class InventoryFragment extends Fragment {
     }
 
     private void exportInventoryReport() {
-        List<InventoryItemEntity> items = vm != null ? vm.getAllInventoryItemsNow() : null;
-        if (items == null) items = new ArrayList<>();
+        ioExecutor.execute(() -> {
+            List<InventoryItemEntity> items = vm != null ? vm.getAllInventoryItemsNow() : null;
+            if (items == null) items = new ArrayList<>();
 
-        File cacheDir = requireContext().getCacheDir();
-        File pdfFile = new File(cacheDir, "inventory_report.pdf");
-        try {
-            generateInventoryPdf(pdfFile, items);
-            Uri uri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".fileprovider", pdfFile);
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("application/pdf");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"dirknashorimaco1@gmail.com"});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Inventory Report");
-            intent.putExtra(Intent.EXTRA_TEXT, "Attached is the latest inventory report from the POS system.");
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            startActivity(Intent.createChooser(intent, getString(R.string.inventory_export_report)));
-            Toast.makeText(requireContext(), R.string.inventory_export_report, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(requireContext(), R.string.inventory_export_error, Toast.LENGTH_LONG).show();
-        }
+            File cacheDir = requireContext().getCacheDir();
+            File pdfFile = new File(cacheDir, "inventory_report.pdf");
+            try {
+                generateInventoryPdf(pdfFile, items);
+                Uri uri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".fileprovider", pdfFile);
+                mainHandler.post(() -> {
+                    if (!isAdded()) return;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("application/pdf");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"nonamefonacier@gmail.com"});
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Inventory Report");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Attached is the latest inventory report from the POS system.");
+                    intent.putExtra(Intent.EXTRA_STREAM, uri);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(intent, getString(R.string.inventory_export_report)));
+                    Toast.makeText(requireContext(), R.string.inventory_export_report, Toast.LENGTH_SHORT).show();
+                });
+            } catch (IOException e) {
+                mainHandler.post(() -> {
+                    if (!isAdded()) return;
+                    Toast.makeText(requireContext(), R.string.inventory_export_error, Toast.LENGTH_LONG).show();
+                });
+            }
+        });
     }
 
     private void generateInventoryPdf(File outFile, List<InventoryItemEntity> items) throws IOException {
@@ -440,6 +452,12 @@ public class InventoryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        ioExecutor.shutdown();
+        super.onDestroy();
     }
 
     public static class CategoryRow {

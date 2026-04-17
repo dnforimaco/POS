@@ -80,6 +80,21 @@
         app:layout_constraintEnd_toStartOf="@id/guideline_cart"
         app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
+    <TextView
+        android:id="@+id/search_scope_banner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:text="@string/pos_search_all_categories"
+        android:textSize="12sp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toEndOf="@id/nav_rail"
+        app:layout_constraintEnd_toStartOf="@id/guideline_cart"
+        app:layout_constraintTop_toBottomOf="@id/tabs_categories" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_products"
         android:layout_width="0dp"
@@ -88,7 +103,7 @@
         android:clipToPadding="false"
         app:layout_constraintStart_toEndOf="@id/nav_rail"
         app:layout_constraintEnd_toStartOf="@id/guideline_cart"
-        app:layout_constraintTop_toBottomOf="@id/tabs_categories"
+        app:layout_constraintTop_toBottomOf="@id/search_scope_banner"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_pos_product" />
 
@@ -109,26 +124,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp">
+            android:minHeight="58dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+            android:background="@color/pos_card_bg">
 
             <TextView
                 android:id="@+id/cart_header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginStart="2dp"
                 android:text="@string/cart_title"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="#212121" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cart_toggle"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:padding="0dp"
+                app:iconTint="@color/pos_primary"
+                app:backgroundTint="@color/card_category_bg"
                 app:iconPadding="0dp"
                 app:iconGravity="textStart" />
         </LinearLayout>
@@ -156,13 +179,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp"
+            android:animateLayoutChanges="true"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
             android:background="@color/pos_warm_bg">
+
+            <TextView
+                android:id="@+id/cart_pending_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textSize="13sp"
+                android:textColor="@color/pos_primary_dark"
+                android:textStyle="bold"
+                tools:text="Editing order #12"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/cart_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/cart_total"
                 android:textColor="@color/price_red"
                 android:textStyle="bold" />
@@ -171,22 +210,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="end"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_clear"
                     style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/cart_clear" />
+                    android:layout_weight="1"
+                    android:minHeight="46dp"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:text="@string/cart_clear"
+                    app:cornerRadius="22dp"
+                    app:strokeColor="@color/card_category_subtitle"
+                    app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_checkout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btn_send_kitchen"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/cart_checkout"
+                    android:layout_weight="1"
+                    android:minHeight="46dp"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:text="@string/pos_send_to_kitchen"
+                    app:cornerRadius="22dp"
                     app:backgroundTint="@color/pos_primary" />
             </LinearLayout>
         </LinearLayout>

@@ -1,6 +1,5 @@
 package com.example.menu_pos.ui.category;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.menu_pos.R;
@@ -24,6 +24,7 @@ import com.example.menu_pos.data.MenuItem;
 import com.example.menu_pos.data.MenuItemVariant;
 import com.example.menu_pos.databinding.FragmentCategoryBinding;
 import com.example.menu_pos.databinding.ItemMenuItemBinding;
+import com.example.menu_pos.ui.VariantPickerDialogHelper;
 import com.example.menu_pos.ui.cart.CartViewModel;
 
 import java.util.ArrayList;
@@ -66,20 +67,10 @@ public class CategoryFragment extends Fragment {
     }
 
     private void showVariantDialog(MenuItem item, List<MenuItemVariant> variants) {
-        String[] labels = new String[variants.size()];
-        for (int i = 0; i < variants.size(); i++) {
-            MenuItemVariant v = variants.get(i);
-            String priceStr = getString(R.string.price_format, v.getPriceCents() / 100);
-            labels[i] = v.getLabel().isEmpty() ? priceStr : v.getLabel() + " — " + priceStr;
-        }
-        new AlertDialog.Builder(requireContext())
-                .setTitle(item.getName())
-                .setItems(labels, (dialog, which) -> {
-                    MenuItemVariant v = variants.get(which);
-                    cartVm.addItem(new CartItem(item.getId(), item.getName(), v.getLabel(), v.getPriceCents(), 1));
-                    Toast.makeText(requireContext(), getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
-                })
-                .show();
+        VariantPickerDialogHelper.show(requireContext(), item, variants, v -> {
+            cartVm.addItem(new CartItem(item.getId(), item.getName(), v.getLabel(), v.getPriceCents(), 1));
+            Toast.makeText(requireContext(), getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -99,8 +90,41 @@ public class CategoryFragment extends Fragment {
         }
 
         void submitList(List<MenuItem> list) {
-            this.list = list != null ? list : new ArrayList<>();
-            notifyDataSetChanged();
+            List<MenuItem> newList = list != null ? list : new ArrayList<>();
+            List<MenuItem> oldList = this.list;
+            DiffUtil.DiffResult diff = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override public int getOldListSize() { return oldList.size(); }
+                @Override public int getNewListSize() { return newList.size(); }
+                @Override public boolean areItemsTheSame(int oldPos, int newPos) {
+                    return oldList.get(oldPos).getId().equals(newList.get(newPos).getId());
+                }
+                @Override public boolean areContentsTheSame(int oldPos, int newPos) {
+                    MenuItem o = oldList.get(oldPos);
+                    MenuItem n = newList.get(newPos);
+                    if (!java.util.Objects.equals(o.getName(), n.getName())) return false;
+                    if (o.getImageResId() != n.getImageResId()) return false;
+                    if (o.isBestSeller() != n.isBestSeller()) return false;
+                    if (o.isSpicy() != n.isSpicy()) return false;
+                    if (o.getCardDisplayPriceCents() != n.getCardDisplayPriceCents()) return false;
+                    return variantsEqual(o.getVariants(), n.getVariants());
+                }
+            });
+            this.list = newList;
+            diff.dispatchUpdatesTo(this);
+        }
+
+        private static boolean variantsEqual(List<MenuItemVariant> a, List<MenuItemVariant> b) {
+            if (a == null && b == null) return true;
+            if (a == null || b == null) return false;
+            if (a.size() != b.size()) return false;
+            for (int i = 0; i < a.size(); i++) {
+                MenuItemVariant x = a.get(i);
+                MenuItemVariant y = b.get(i);
+                String lx = x.getLabel() != null ? x.getLabel() : "";
+                String ly = y.getLabel() != null ? y.getLabel() : "";
+                if (!lx.equals(ly) || x.getPriceCents() != y.getPriceCents()) return false;
+            }
+            return true;
         }
 
         @NonNull

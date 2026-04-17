@@ -23,8 +23,8 @@ public class UserRepository {
 
     private void seedIfEmpty() {
         if (userDao.getCount() == 0) {
-            userDao.insert(new User("Manager", "Naomie123"));
-            userDao.insert(new User("Employee", ""));
+            userDao.insert(new User("manager", "naomie123"));
+            userDao.insert(new User("employee", ""));
         }
     }
 

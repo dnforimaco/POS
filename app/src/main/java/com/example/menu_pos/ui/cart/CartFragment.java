@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
+
 import com.example.menu_pos.R;
 import com.example.menu_pos.data.CartItem;
 import com.example.menu_pos.databinding.FragmentCartBinding;
@@ -37,6 +39,7 @@ public class CartFragment extends Fragment {
         CartViewModel vm = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         CartAdapter adapter = new CartAdapter(vm);
         binding.recyclerCart.setAdapter(adapter);
+        binding.recyclerCart.setItemAnimator(null);
 
         vm.getItems().observe(getViewLifecycleOwner(), items -> {
             adapter.submitList(items != null ? new ArrayList<>(items) : new ArrayList<>());
@@ -74,7 +77,7 @@ public class CartFragment extends Fragment {
         }
 
         void submitList(List<CartItem> list) {
-            this.list = list != null ? list : new ArrayList<>();
+            this.list = list != null ? new ArrayList<>(list) : new ArrayList<>();
             notifyDataSetChanged();
         }
 
@@ -89,8 +92,22 @@ public class CartFragment extends Fragment {
         public void onBindViewHolder(@NonNull Holder h, int position) {
             CartItem item = list.get(position);
             h.line.setText(item.getDisplayLine());
-            h.price.setText(h.itemView.getContext().getString(R.string.price_format, item.getTotalCents() / 100));
+            android.content.Context ctx = h.itemView.getContext();
+            if (item.isApplyTenPercentDiscount()) {
+                String cur = ctx.getString(R.string.price_format, item.getLineTotalCents() / 100);
+                String was = ctx.getString(R.string.price_format, item.getSubtotalCents() / 100);
+                h.price.setText(ctx.getString(R.string.cart_line_with_discount, cur, was));
+            } else {
+                h.price.setText(ctx.getString(R.string.price_format, item.getTotalCents() / 100));
+            }
             h.qty.setText(String.valueOf(item.getQuantity()));
+            h.discountCb.setOnCheckedChangeListener(null);
+            h.discountCb.setChecked(item.isApplyTenPercentDiscount());
+            h.discountCb.setOnCheckedChangeListener((btn, checked) -> {
+                int pos = h.getBindingAdapterPosition();
+                if (pos == RecyclerView.NO_POSITION) return;
+                vm.setLineDiscountAt(pos, checked);
+            });
             h.btnMinus.setOnClickListener(v -> vm.setQuantity(item, item.getQuantity() - 1));
             h.btnPlus.setOnClickListener(v -> vm.setQuantity(item, item.getQuantity() + 1));
             h.btnRemove.setOnClickListener(v -> vm.removeItem(item));
@@ -103,6 +120,7 @@ public class CartFragment extends Fragment {
 
         static class Holder extends RecyclerView.ViewHolder {
             final TextView line, price, qty;
+            final MaterialCheckBox discountCb;
             final com.google.android.material.button.MaterialButton btnMinus, btnPlus;
             final android.widget.ImageButton btnRemove;
 
@@ -111,6 +129,7 @@ public class CartFragment extends Fragment {
                 line = b.cartItemLine;
                 price = b.cartItemPrice;
                 qty = b.cartItemQty;
+                discountCb = b.cartItemDiscount;
                 btnMinus = b.btnMinus;
                 btnPlus = b.btnPlus;
                 btnRemove = b.btnRemove;

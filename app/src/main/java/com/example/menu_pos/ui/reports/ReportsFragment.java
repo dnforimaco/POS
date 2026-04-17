@@ -45,7 +45,7 @@ public class ReportsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String currentUser = new UserRepository(requireContext().getApplicationContext()).getLoggedInUser();
-        if (!"Manager".equals(currentUser)) {
+        if (!"manager".equalsIgnoreCase(currentUser)) {
             Toast.makeText(requireContext(), R.string.reports_manager_only, Toast.LENGTH_SHORT).show();
             Navigation.findNavController(view).navigateUp();
             return;
@@ -71,6 +71,8 @@ public class ReportsFragment extends Fragment {
         binding.reportsDailyValue.setText(formatPesos(data.getDailySalesCents()));
         binding.reportsWeeklyValue.setText(formatPesos(data.getWeeklySalesCents()));
         binding.reportsMonthlyValue.setText(formatPesos(data.getMonthlySalesCents()));
+        binding.reportsDailyCashValue.setText("Cash: " + formatPesos(data.getDailyCashSalesCents()));
+        binding.reportsDailyGcashValue.setText("GCash: " + formatPesos(data.getDailyGcashSalesCents()));
 
         StringBuilder top = new StringBuilder();
         for (ReportData.TopItem t : data.getTopSellingItems()) {
@@ -98,7 +100,7 @@ public class ReportsFragment extends Fragment {
 
     private void exportToPdf() {
         ReportData data = viewModel.getReportData().getValue();
-        if (data == null) data = new ReportData(0, 0, 0, null, null, 0, 0, "—", "—", 0);
+        if (data == null) data = new ReportData(0, 0, 0, 0, 0, null, null, 0, 0, "—", "—", 0);
 
         PdfDocument doc = new PdfDocument();
         int pageWidth = 595; // A4 pt
@@ -127,6 +129,10 @@ public class ReportsFragment extends Fragment {
         valuePaint.setTextSize(11);
 
         drawLine(page, "Daily Sales (today):", formatPesos(data.getDailySalesCents()), 40, y, labelPaint, valuePaint);
+        y += 18;
+        drawLine(page, "  - Cash:", formatPesos(data.getDailyCashSalesCents()), 40, y, labelPaint, valuePaint);
+        y += 18;
+        drawLine(page, "  - GCash:", formatPesos(data.getDailyGcashSalesCents()), 40, y, labelPaint, valuePaint);
         y += 18;
         drawLine(page, "Weekly Sales (last 7 days):", formatPesos(data.getWeeklySalesCents()), 40, y, labelPaint, valuePaint);
         y += 18;
@@ -184,7 +190,7 @@ public class ReportsFragment extends Fragment {
         Uri uri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".fileprovider", file);
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("application/pdf");
-        share.putExtra(Intent.EXTRA_EMAIL, new String[]{"dirknashorimaco1@gmail.com"});
+        share.putExtra(Intent.EXTRA_EMAIL, new String[]{"nonamefonacier@gmail.com"});
         share.putExtra(Intent.EXTRA_SUBJECT, "Sales Report");
         share.putExtra(Intent.EXTRA_TEXT, "Attached is the latest sales report from the POS system.");
         share.putExtra(Intent.EXTRA_STREAM, uri);

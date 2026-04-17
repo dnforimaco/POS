@@ -43,6 +43,27 @@ public class MenuItem {
         return 0;
     }
 
+    /**
+     * Price for product-grid cards. When both with-rice and à la carte exist, shows the with-rice
+     * price instead of the cheaper option. Otherwise matches the former “lowest variant” behavior.
+     */
+    public int getCardDisplayPriceCents() {
+        if (variants.isEmpty()) return 0;
+        if (variants.size() == 1) return variants.get(0).getPriceCents();
+        for (MenuItemVariant v : variants) {
+            if ("W/RICE".equals(v.getLabel())) return v.getPriceCents();
+        }
+        for (MenuItemVariant v : variants) {
+            if ("Solo (with rice)".equals(v.getLabel())) return v.getPriceCents();
+        }
+        for (MenuItemVariant v : variants) {
+            if ("Solo".equals(v.getLabel())) return v.getPriceCents();
+        }
+        int min = Integer.MAX_VALUE;
+        for (MenuItemVariant v : variants) min = Math.min(min, v.getPriceCents());
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
+
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {
